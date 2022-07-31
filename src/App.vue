@@ -1,7 +1,8 @@
 <template>
   <div>
+    <navbar></navbar>
     <div class="container">
-      <div class="container" id="formulario">
+      <div v-if="form.length > 0" class="container" id="formulario">
         <div v-for="(nivel, i) in form" class="row nivel-padre" :key="i">
           <div class="row row-cols-2 nivel">
             <div class="col-10">
@@ -63,15 +64,35 @@
                   </div>
                   <div v-else-if="input.type == 'file'">
                     <div>
-                      <label v-bind:for="input.id" class="form-label">{{input.label}}</label>
-                      <input class="form-control" type="file" v-bind:id="id" v-bind:name="input.name">
+                      <label v-bind:for="input.id" class="form-label">{{
+                        input.label
+                      }}</label>
+                      <input
+                        class="form-control"
+                        type="file"
+                        v-bind:id="id"
+                        v-bind:name="input.name"
+                      />
                     </div>
                   </div>
                   <div v-else-if="input.type == 'color'">
-                     <div>
-                      <label v-bind:for="input.id" class="form-label">{{input.label}}</label>
-                      <input type="color" class="form-control form-control-color" v-bind:id="id" value="#000" title="Seleccione un Color" v-bind:name="name">
+                    <div>
+                      <label v-bind:for="input.id" class="form-label">{{
+                        input.label
+                      }}</label>
+                      <input
+                        type="color"
+                        class="form-control form-control-color"
+                        v-bind:id="id"
+                        value="#000"
+                        title="Seleccione un Color"
+                        v-bind:name="name"
+                      />
                     </div>
+                  </div>
+                  <div v-else-if="input.type == 'date'">
+                    <label v-bind:for="input.id">{{input.label}}</label>
+                    <input class="form-control" type="date" v-bind:name="input.name" v-bind:id="input.date">
                   </div>
                   <div v-else>
                     <label v-bind:for="input.id" class="form-label">{{
@@ -103,6 +124,16 @@
           <hr />
         </div>
       </div>
+      <div v-else>
+        <div class="row justify-content-center">
+          <button class="add" v-on:click="addnivel(i)">
+            <span class="material-symbols-outlined"> add </span>
+          </button>
+          <button class="add" v-on:click="removenivel(i)">
+            <span class="material-symbols-rounded"> delete </span>
+          </button>
+        </div>
+      </div>
       <h1>Codigo</h1>
       <hr />
       <button class="add" v-on:click="clipboard()">
@@ -115,10 +146,13 @@
 
 <script>
 import cargarInputVue from "./components/cargarInput.vue";
+import navbar from "./components/navbar.vue";
+
 export default {
   name: "App",
   components: {
     cargarInputVue,
+    navbar,
   },
   data() {
     return {
@@ -169,6 +203,7 @@ export default {
     },
     removenivel(i) {
       this.form.splice(i, 1);
+      console.log(this.form);
     },
     async loadhtml() {
       var html = `<form class="container" method="" action="">\n`;

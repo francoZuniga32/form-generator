@@ -61,6 +61,7 @@
                   <option value="switch">Switch</option>
                   <option value="file">Archivo</option>
                   <option value="color">Color</option>
+                  <option value="date">Date</option>
                 </select>
               </div>
             </div>
