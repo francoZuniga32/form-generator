@@ -7,7 +7,12 @@
         </option>
       </select>
       <hr>
-      
+      <div class="">
+        <div class="card" v-for="(data, k) in options" :key="k">
+          <p>{{ data.value }}</p>
+          <button class="btn btn-danger text-white" v-on:click="removenivel(k)">x</button>
+        </div>
+      </div>
     </div>
     <div class="col rounded-end bg-secondary" style="padding: 1%;">
       <input 
@@ -43,6 +48,10 @@ export default {
       this.options.push({ value: this.value, text: this.text });
       this.value = null;
       this.text = null;
+    },
+    removenivel(i) {
+      this.options.splice(i, 1);
+      console.log(this.form);
     },
     getOptions() {
       return this.options;

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-2">
+  <div class="col-1">
     <button
       type="button"
       class="add"
@@ -62,6 +62,7 @@
                   <option value="file">Archivo</option>
                   <option value="color">Color</option>
                   <option value="date">Date</option>
+                  <option value="time">Time</option>
                 </select>
               </div>
             </div>

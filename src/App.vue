@@ -6,8 +6,8 @@
         <div v-for="(nivel, i) in form" class="row nivel-padre" :key="i">
           <div class="row row-cols-2 nivel">
             <div class="col-10">
-              <div class="row row-cols-3 d-flex align-items-end">
-                <div v-for="(input, k) in nivel" class="col-sm-3" :key="k">
+              <div v-bind:class="css(nivel.cols)">
+                <div v-for="(input, k) in nivel.inputs" class="col" :key="k">
                   <div v-if="input.type == 'select'">
                     <label v-bind:for="input.id">{{ input.label }}</label>
                     <select
@@ -94,6 +94,10 @@
                     <label v-bind:for="input.id">{{input.label}}</label>
                     <input class="form-control" type="date" v-bind:name="input.name" v-bind:id="input.date">
                   </div>
+                  <div v-else-if="input.type == 'time'">
+                    <label v-bind:for="input.id">{{input.label}}</label>
+                    <input class="form-control" type="time" v-bind:name="input.name" v-bind:id="input.date">
+                  </div>
                   <div v-else>
                     <label v-bind:for="input.id" class="form-label">{{
                       input.label
@@ -112,6 +116,9 @@
               :indice="i"
               v-on:cargarInput="cargarInput"
             ></cargarInputVue>
+            <div class="col-1">
+              <input type="number" class="form-control" v-model="nivel.cols"> 
+            </div>
           </div>
           <div class="row justify-content-center">
             <button class="add" v-on:click="addnivel(i)">
@@ -157,32 +164,40 @@ export default {
   data() {
     return {
       form: [
-        [
-          {
-            name: "nombre",
-            id: "nombre",
-            label: "Nombre:",
-            type: "text",
-            placeholder: "",
-          },
-          {
-            name: "apellido",
-            id: "apllido",
-            label: "Apellido:",
-            type: "text",
-            placeholder: "",
-          },
-        ],
+        {
+          cols: 2,
+          inputs:[
+            {
+              name: "nombre",
+              id: "nombre",
+              label: "Nombre:",
+              type: "text",
+              placeholder: "",
+            },
+            {
+              name: "apellido",
+              id: "apllido",
+              label: "Apellido:",
+              type: "text",
+              placeholder: "",
+            },
+          ],
+        }
+        
       ],
       html: "",
     };
   },
+  
   mounted() {
     this.loadhtml();
   },
   methods: {
+    css(cols){
+      return `row row-cols-${cols} d-flex align-items-end`
+    },
     cargarInput(data) {
-      this.form[data.id].push(data.data);
+      this.form[data.id].inputs.push(data.data);
       console.log(data);
       this.loadhtml();
     },
@@ -208,7 +223,7 @@ export default {
     async loadhtml() {
       var html = `<form class="container" method="" action="">\n`;
       for (let j = 0; j < this.form.length; j++) {
-        var nivel = this.form[j];
+        var nivel = this.form[j].inputs;
         var nivelHtml = `\t<div class="row row-cols-3">\n`;
         for (let i = 0; i < nivel.length; i++) {
           console.log(nivel[i]);
@@ -261,7 +276,7 @@ export default {
               )}\n`;
               break;
             case "checkbox":
-              nivelHtml += `\t\t\t${await this.inputCheckbox(label, name, id)}`;
+              nivelHtml += `\t\t\t\t${await this.inputCheckbox(label, name, id)}`;
               break;
             case "switch":
               nivelHtml += `\t\t\t${await this.inputSwich(label, name, id)}`;
@@ -271,6 +286,12 @@ export default {
               break;
             case "color":
               nivelHtml += `\t\t\t${await this.inputColor(label, name, id)}`;
+              break;
+            case "date":
+              nivelHtml += `\t\t\t${await this.inputDate(label, name, id)}`;
+              break;
+            case "time": 
+              nivelHtml += `\t\t\t${await this.inputTime(label, name, id)}`;
               break;
           }
           nivelHtml += `\t\t</div>\n`;
@@ -311,6 +332,19 @@ export default {
         <input class="form-check-input" type="checkbox" id="${id}" name="${name}"/>
         <label for="${id}" class="form-check-label">${label}</label>
       </div>
+      `;
+    },
+    async inputDate(label, name, id){
+      return `
+        <label for="${id}" class="form-check-label">${label}</label>
+        <input class="form-control" type="date" id="${id}" name="${name}"/>
+      `;
+    },
+    async inputTime(label, name, id){
+      return `
+        <label for="${id}" class="form-check-label">${label}</label>
+        <input class="form-control" type="time" id="${id}" name="${name}"/>
+
       `;
     },
     async inputRange(min, max, step, label, name, id) {
