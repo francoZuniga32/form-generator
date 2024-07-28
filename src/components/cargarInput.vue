@@ -163,6 +163,7 @@ export default {
       switch (this.type) {
         case "select":
           data.options = [...this.$refs.selectAdd.options];
+          this.$refs.selectAdd.refresh();
           break;
         case "range":
           data.max = this.$refs.rangeAdd.max;
@@ -180,6 +181,10 @@ export default {
       this.label = "";
       this.type = "";
       this.placeholder = "";
+      
+      this.display_options.select = false;
+      this.display_options.number = false;
+      this.display_options.range = false;
     },
   },
 };

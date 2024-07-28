@@ -8,8 +8,8 @@
       </select>
       <hr>
       <div class="">
-        <div class="card" v-for="(data, k) in options" :key="k">
-          <p>{{ data.value }}</p>
+        <div class="card d-flex" v-for="(data, k) in options" :key="k">
+          <p>{{ data.text }}</p>
           <button class="btn btn-danger text-white" v-on:click="removenivel(k)">x</button>
         </div>
       </div>
@@ -56,6 +56,11 @@ export default {
     getOptions() {
       return this.options;
     },
+    refresh(){
+      this.options = [];
+      this.value = null;
+      this.text = null;
+    }
   },
 };
 </script>

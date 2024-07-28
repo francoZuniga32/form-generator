@@ -6,7 +6,7 @@
         <div v-for="(nivel, i) in form" class="row nivel-padre" :key="i">
           <div class="row row-cols-2 nivel">
             <div class="col-10">
-              <div v-bind:class="css(nivel.cols)">
+              <div v-bind:class="css(i)">
                 <div v-for="(input, k) in nivel.inputs" class="col" :key="k">
                   <div v-if="input.type == 'select'">
                     <label v-bind:for="input.id">{{ input.label }}</label>
@@ -16,13 +16,14 @@
                       v-bind:id="input.id"
                     >
                       <option
-                        v-for="(option, i) in input.options.options"
-                        :key="i"
+                        v-for="(option, j) in input.options"
+                        :key="j"
                         v-bind:value="option.value"
                       >
                         {{ option.text }}
                       </option>
                     </select>
+                    
                   </div>
                   <div v-else-if="input.type == 'range'">
                     <label v-bind:for="input.id">{{ input.label }}</label>
@@ -109,6 +110,9 @@
                       v-bind:placeholder="input.placeholder"
                     />
                   </div>
+                  <button class="btn btn-ligth" v-on:click="removeInput(i, k)">
+                    <span class="material-symbols-rounded"> delete </span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -117,7 +121,21 @@
               v-on:cargarInput="cargarInput"
             ></cargarInputVue>
             <div class="col-1">
-              <input type="number" class="form-control" v-model="nivel.cols"> 
+              <div>
+                Brackpoints
+              </div>
+              <div class="row">
+                sm 
+                <input type="number" class="form-control" v-model="nivel.colssm" min="1" max="12" v-on:change="loadhtml"> 
+              </div>
+              <div class="row d-flex">
+                md 
+                <input type="number" class="form-control" v-model="nivel.colsmd" min="1" max="12" v-on:change="loadhtml"> 
+              </div>
+              <div class="row">
+                lg 
+                <input type="number" class="form-control" v-model="nivel.colslg"  min="1" max="12" v-on:change="loadhtml"> 
+              </div>
             </div>
           </div>
           <div class="row justify-content-center">
@@ -165,7 +183,9 @@ export default {
     return {
       form: [
         {
-          cols: 2,
+          colssm:1,
+          colsmd: 2,
+          colslg: 3,
           inputs:[
             {
               name: "nombre",
@@ -194,7 +214,7 @@ export default {
   },
   methods: {
     css(cols){
-      return `row row-cols-${cols} d-flex align-items-end`
+      return `row row-cols-sm-${this.form[cols].colssm} row-cols-md-${this.form[cols].colsmd}  row-cols-lg-${this.form[cols].colslg}  d-flex align-items-end`
     },
     cargarInput(data) {
       this.form[data.id].inputs.push(data.data);
@@ -204,13 +224,23 @@ export default {
     addnivel(i) {
       console.log(i);
       if (this.form.length <= 1 || i == this.form.length - 1) {
-        this.form.push([]);
+        this.form.push({
+          colssm:1,
+          colsmd: 2,
+          colslg: 3,
+          inputs: []
+        });
       } else {
         if (i < this.form.length) {
           var inicio = this.form.slice(0, i + 1);
           var final = this.form.slice(i + 1);
           console.log(inicio, final);
-          inicio.push([]);
+          inicio.push({
+            colssm:1,
+            colsmd: 2,
+            colslg: 3,
+            inputs:[]
+          });
           this.form = inicio.concat(final);
         }
       }
@@ -220,16 +250,20 @@ export default {
       this.form.splice(i, 1);
       console.log(this.form);
     },
+    removeInput(idNivel, id){
+      this.form[idNivel].inputs.splice(id, 1);
+    },  
     async loadhtml() {
       var html = `<form class="container" method="" action="">\n`;
       for (let j = 0; j < this.form.length; j++) {
         var nivel = this.form[j].inputs;
-        var nivelHtml = `\t<div class="row row-cols-3">\n`;
+        var nivelHtml = `\t<div class="row row-cols-sm-${this.form[j].colssm} row-cols-md-${this.form[j].colsmd} row-cols-lg-${this.form[j].colslg} ">\n`;
+
         for (let i = 0; i < nivel.length; i++) {
           console.log(nivel[i]);
           var { name, id, label, type, placeholder, min, max, step, options } =
             nivel[i];
-          nivelHtml += `\t\t<div class="col-sm-3 m-1">\n`;
+          nivelHtml += `\t\t<div class="col">\n`;
           switch (type) {
             case "text":
               nivelHtml += `\t\t\t${await this.inputText(
