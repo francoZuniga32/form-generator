@@ -14,19 +14,94 @@
 
 <body>
       <form class="container" method="" action="">
-            <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 ">
+            <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-2 ">
                   <div class="col">
-
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" />
-
+                        
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombres Completos"/>
+            
                   </div>
                   <div class="col">
-
-                        <label for="apllido" class="form-label">Apellido:</label>
-                        <input type="text" class="form-control" id="apllido" name="apellido" placeholder="" />
-
+                        
+              <label for="apellido" class="form-label">Apellido</label>
+              <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellidos Completos"/>
+            
                   </div>
+                  <div class="col">
+                        
+              <label for="dni" class="form-label">Dni</label>
+              <input type="number" max="undefined" max="undefined" class="form-control" id="dni" name="dni" placeholder=""/>
+            
+                  </div>
+                  <div class="col">
+                        
+              <label for="fecha_nacimiento" class="form-check-label">Fecha de Nacimiento</label>
+              <input class="form-control" type="date" id="fecha_nacimiento" name="fecha_nacimiento"/>
+                        </div>
+            </div>
+            <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 ">
+                  <div class="col">
+                        
+              <label for="rango" class="form-label">Rango</label>
+              <input type="range" class="form-range" name="rango" id="rango" min="0" max="100" step="1">
+            
+                  </div>
+                  <div class="col">
+                        <label for="estudios" class="form-label">Estudios</label>
+      
+              <select class="form-control" id="estudios" name="estudios">
+            <option value="null" >Seleccione una opcion</option>
+      <option value="primario" >Primario</option>
+      <option value="Secundario" >Secundario</option>
+      <option value="terciario" >Terciario</option>
+      <option value="universitario" >Universitario</option>
+      </select>
+                  </div>
+                  <div class="col">
+                              
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="relacion_dependencia" name="relacion_dependencia"/>
+              <label for="relacion_dependencia" class="form-check-label">Trabaja en Relación de Dependencia</label>
+            </div>
+                        </div>
+            </div>
+            <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-3 ">
+                  <div class="col">
+                        
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="activar"
+                name="activar"
+              />
+              <label
+                class="form-check-label"
+                for="activar"
+                >Activar Notificaciones</label
+              >
+            </div>
+                        </div>
+                  <div class="col">
+                        
+              <div>
+                <label for="cv" class="form-label">CV</label>
+                <input class="form-control" type="file" id="cv" name="cv">
+              </div>
+                        </div>
+                  <div class="col">
+                        
+              <div>
+                <label for="color" class="form-label">Color</label>
+                <input type="color" class="form-control form-control-color" id="color" value="#000" title="Seleccione un Color" name="color">
+              </div>
+                        </div>
+                  <div class="col">
+                        
+              <label for="hora" class="form-check-label">hora</label>
+              <input class="form-control" type="time" id="hora" name="hora"/>
+      
+                        </div>
             </div>
       </form>
 </body>
