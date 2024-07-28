@@ -60,7 +60,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 | Number | Valor Minino, Valor Máximo, Aceptar double |
 | Archivo | Tipo de Archivos Aceptados |
 | Date | Fecha Minino, Fecha Máximo | 
-- [ ]  Date TIme Select 
+- [ ]  DateTime Select 
 - [ ]  Un nuevo Date Input 
 
 ## Bugs
