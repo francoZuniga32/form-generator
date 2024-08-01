@@ -4,8 +4,28 @@
     <div class="container">
       <div v-if="form.length > 0" class="container" id="formulario">
         <div v-for="(nivel, i) in form" class="row nivel-padre" :key="i">
-          <div class="row row-cols-2 nivel">
-            <div class="col-10">
+          <div class="row p-2 g-3 align-items-center justify-content-center border rounded">
+            <div class="col-auto">
+                sm 
+            </div>
+            <div class="col-1">
+              <input type="number" class="form-control" v-model="nivel.colssm" min="1" max="12" v-on:change="loadhtml"> 
+            </div>
+            <div class="col-auto">
+              md
+            </div>
+            <div class="col-1">
+              <input type="number" class="form-control" v-model="nivel.colsmd" min="1" max="12" v-on:change="loadhtml"> 
+            </div>
+            <div class="col-auto">
+              lg 
+            </div>
+            <div class="col-1">
+              <input type="number" class="form-control" v-model="nivel.colslg"  min="1" max="12" v-on:change="loadhtml"> 
+            </div>
+          </div>
+          <div class="row row-cols-2 nivel p-2">
+            <div class="col-11">
               <div v-bind:class="css(i)">
                 <div v-for="(input, k) in nivel.inputs" class="col" :key="k">
                   <div v-if="input.type == 'select'">
@@ -38,15 +58,14 @@
                   </div>
                   <div v-else-if="input.type == 'checkbox'">
                     <div class="form-check">
-                      sdfsdfsdf
                       <input
                         class="form-check-input"
                         type="checkbox"
-                        v-bind:id="id"
-                        v-bind:name="name"
+                        v-bind:id="input.id"
+                        v-bind:name="input.name"
                       />
                       <label v-bind:for="input.id" class="form-check-label"
-                        >input.label</label
+                        >{{input.label}}</label
                       >
                     </div>
                   </div>
@@ -120,23 +139,6 @@
               :indice="i"
               v-on:cargarInput="cargarInput"
             ></cargarInputVue>
-            <div class="col-1">
-              <div>
-                Brackpoints
-              </div>
-              <div class="row">
-                sm 
-                <input type="number" class="form-control" v-model="nivel.colssm" min="1" max="12" v-on:change="loadhtml"> 
-              </div>
-              <div class="row d-flex">
-                md 
-                <input type="number" class="form-control" v-model="nivel.colsmd" min="1" max="12" v-on:change="loadhtml"> 
-              </div>
-              <div class="row">
-                lg 
-                <input type="number" class="form-control" v-model="nivel.colslg"  min="1" max="12" v-on:change="loadhtml"> 
-              </div>
-            </div>
           </div>
           <div class="row justify-content-center">
             <button class="add" v-on:click="addnivel(i)">
@@ -214,7 +216,7 @@ export default {
   },
   methods: {
     css(cols){
-      return `row row-cols-sm-${this.form[cols].colssm} row-cols-md-${this.form[cols].colsmd}  row-cols-lg-${this.form[cols].colslg}  d-flex align-items-end`
+      return `row row-cols-${this.form[cols].colssm} row-cols-sm-${this.form[cols].colssm} row-cols-md-${this.form[cols].colsmd}  row-cols-lg-${this.form[cols].colslg}  d-flex align-items-end`
     },
     cargarInput(data) {
       this.form[data.id].inputs.push(data.data);
@@ -257,7 +259,7 @@ export default {
       var html = `<form class="container" method="" action="">\n`;
       for (let j = 0; j < this.form.length; j++) {
         var nivel = this.form[j].inputs;
-        var nivelHtml = `\t<div class="row row-cols-sm-${this.form[j].colssm} row-cols-md-${this.form[j].colsmd} row-cols-lg-${this.form[j].colslg} ">\n`;
+        var nivelHtml = `\t<div class="row row-cols-${this.form[j].colssm} row-cols-sm-${this.form[j].colssm} row-cols-md-${this.form[j].colsmd} row-cols-lg-${this.form[j].colslg} ">\n`;
 
         for (let i = 0; i < nivel.length; i++) {
           console.log(nivel[i]);
